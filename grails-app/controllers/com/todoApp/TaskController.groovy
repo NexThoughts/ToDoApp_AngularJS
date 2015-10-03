@@ -43,7 +43,6 @@ class TaskController {
     }
 
     def loadTaskList = {
-        println("***************************************        ")
         def result = [:]
         result.taskList = Task.list()
         render result as JSON
