@@ -24,7 +24,7 @@ class TaskController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy")
         task.taskEndDate = dateFormat.parse(params.taskDate)
         task.description = params.description
-        if(!task.validate()){
+        if(task.validate()){
             task.save(flush: true)
             result.result = 'SUCCESS'
             result.successMsg = "Task saved successfully."
@@ -44,7 +44,9 @@ class TaskController {
 
     def loadTaskList = {
         def result = [:]
-        result.taskList = Task.list()
+        result.taskList = Task.createCriteria().list {
+            order('taskEndDate',ORDER_ASCENDING)
+        }
         render result as JSON
     }
 
